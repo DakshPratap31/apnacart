@@ -23,6 +23,9 @@
                     <div class="valid-feedback">Looks good!</div>
                     <div class="invalid-feedback">Not a valid price!</div>
                   </div>
+
+                 
+
                   <h6 class="my-3 text-center">You can give either a image file or a image link</h6>
                   <div class="form-outline mb-4">
                     <input type="file" class="form-control" name="image" id="customFile" />
@@ -43,6 +46,20 @@
                     <div class="invalid-feedback">Not a proper description</div>
                   </div>
                 
+                    <!-- Category-->
+                    <div class="form-outline mb-5">
+                      <select class="form-control" name="category" required>
+                          <option value="" disabled selected>Select a category</option>
+                          <% categories.forEach(category => { %>
+                              <option value="<%= category._id %>"><%= category.name %></option>
+                          <% }); %>
+                      </select>
+                      <label class="form-label" for="category">Category</label>
+                      <div class="valid-feedback">Looks good!</div>
+                      <div class="invalid-feedback">Please select a category</div>
+                    </div>
+
+
                   <div class="btn-container d-flex flex-column w-50 justify-center m-auto">
                     <button type="submit" class="btn btn-primary mb-4">Add Product</button>
                     <button type="reset" class="btn btn-primary mb-4">Reset</button>

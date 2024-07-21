@@ -114,3 +114,19 @@ transform: scale(1.05);
     }
  
 }
+.btn-group:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* optional: to prevent a jump (optional) */
+  }
+  
+  .btn-group .dropdown-menu{
+    margin-top: 0;
+   
+    
+    
+ /* optional: to prevent a jump (optional) */
+ 
+    
+  }
+  
+  

@@ -8,9 +8,18 @@
 <main>
     <div class="home-body container mt-4">   
         <h2 class="text-center">Welcome to Apna Cart <i class="fas fa-shopping-cart"></i></h2>
-        <hr>
-        <h4>All products</h4>
-        <hr>
+        
+        <!-- Category-->
+        <div class=" d-flex flex-row justify-content-start ">
+          <h4 class="p-2">All products  </h4>
+         <% categories.forEach(category => { %>
+            <a href="/category/<%= category._id %>" class="p-2"><%= category.name %></a>
+        <% }); %>
+          
+        </div>
+        
+       
+        
         <section class="product-holder my-3">
           <% if(data.length<1){ %> 
             <h3 class="text-center my-3">Sorry no products are available</h3>
@@ -58,5 +67,7 @@
             
         </section>
     </div>
+    <!-- chat bot-->
+    
 </main>
 <%- include("../partials/footer") %>

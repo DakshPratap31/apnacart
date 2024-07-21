@@ -16,9 +16,14 @@ const productSchema=new mongoose.Schema({
         min:0,
         required:true
     },
+    category: {
+         type: mongoose.Schema.Types.ObjectId,
+          ref: 'Category',
+           required: true },
     desc:{
         type:String
     },
+    
     reviews:[
         {
             type:mongoose.ObjectId,

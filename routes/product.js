@@ -12,6 +12,7 @@ const path = require("path");
 const fs = require("fs");
 const currentUrl = require("../middlewares/currentUrl");
 const { v4: uuid } = require("uuid");
+const Category = require('../models/Category');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname,"/uploads/product"));
@@ -22,18 +23,33 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-router.get("/", currentUrl, async (req, res) => {
+router.get("/category/:id", async (req, res) => {
   try {
-    const data = await Product.find({});
-    res.render("products/index", { data });
+    const { id } = req.params;
+    const data = await Product.find({ category: id }).populate("category");
+    const categories = await Category.find({});
+    res.render("products/index", { data, categories });
   } catch (err) {
     console.log(err);
     res.status(404).render("error/error", { status: "404" });
   }
 });
-router.get("/products/new", isLoggedIn, isAdmin, (req, res) => {
+
+
+
+router.get("/", currentUrl, async (req, res) => { 
   try {
-    res.render("products/new");
+    const data = await Product.find({});
+    const categories = await Category.find({});
+    res.render("products/index", { data , categories});
+  } catch (err) {
+    console.log(err);
+    res.status(404).render("error/error", { status: "404" });
+  }
+});
+router.get("/products/new", isLoggedIn, isAdmin, async(req, res) => {
+  try { const categories = await Category.find({});
+    res.render("products/new" , { categories });
   } catch (e) {
     console.log(e);
     res.status(404).render("error/error", { status: "404" });
@@ -70,8 +86,9 @@ router.post("/products/new",isLoggedIn,isAdmin,upload.single("image"),async (req
 router.get("/products/:id", currentUrl, async (req, res) => {
   try {
     const { id } = req.params;
+    const categories = await Category.find({});
     const data = await Product.findById(id).populate("reviews");
-    res.render("products/item", { data });
+    res.render("products/item", { data,categories });
   } catch (e) {
     console.log(e);
     res.status(404).render("error/error", { status: "404" });
@@ -80,8 +97,9 @@ router.get("/products/:id", currentUrl, async (req, res) => {
 router.get("/products/:id/edit", isLoggedIn, isAdmin, async (req, res) => {
   try {
     const { id } = req.params;
+    const categories = await Category.find({});
     const data = await Product.findById(id);
-    res.render("products/edit", { data });
+    res.render("products/edit", { data ,categories });
   } catch (e) {
     console.log(e);
     res.status(404).render("error/error", { status: "404" });

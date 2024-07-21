@@ -17,6 +17,10 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("./models/user");
+const searchRouter = require('./routes/search');
+const categoryRoutes = require('./routes/category');
+const webhook = require('./routes/webhook');
+
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 mongoose
   .connect(process.env.MDB_CONNECT, {
@@ -103,6 +107,9 @@ app.use(authRoutes);
 app.use(userRoutes);
 app.use(orderRoute);
 app.use(adminRoute);
+app.use( searchRouter);
+app.use('/webhook', webhook);
+app.use('/categories', categoryRoutes);
 app.use('*',(req,res)=>{
   res.render('error/error')
 })
